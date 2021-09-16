@@ -34,3 +34,4 @@ Route::get('/category/{category}', [CategoryController::class, 'show']);
 Route::put('/category/{category}', [CategoryController::class, 'update']);
 Route::delete('/category/{category}', [CategoryController::class, 'destroy']);
 Route::post('/category/restore/{category}', [CategoryController::class, 'restore']);
+Route::post('/category/trash', [CategoryController::class, 'getTrashed']);

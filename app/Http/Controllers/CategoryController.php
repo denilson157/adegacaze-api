@@ -15,7 +15,8 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $category = Category::create($request->all());
-        return response()->json($category);
+
+        return $this->returnVO("Criada", $category);
     }
 
 
@@ -27,14 +28,16 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         $category->update($request->all());
-        return response()->json($category);
+
+        return $this->returnVO("Atualizada", $category);
     }
 
 
     public function destroy(Category $category)
     {
         $category->delete();
-        return response()->json($category);
+
+        return $this->returnVO("Apagada", $category);
     }
 
 
@@ -42,6 +45,17 @@ class CategoryController extends Controller
     {
         $category = Category::onlyTrashed()->where('id', $id)->firstOrFail();
         $category->restore();
-        return response()->json($category);
+
+        return $this->returnVO("Restaurada", $category);
+    }
+
+    public function getTrashed()
+    {
+        return response()->json(Category::onlyTrashed()->get());
+    }
+
+    private function returnVO($message, $content)
+    {
+        return response()->json(["message" => $message, "resp" => $content]);
     }
 }
