@@ -26,7 +26,7 @@ Route::get('/brand/{brand}', [BrandController::class, 'show']);
 Route::put('/brand/{brand}', [BrandController::class, 'update']);
 Route::delete('/brand/{brand}', [BrandController::class, 'destroy']);
 Route::post('/brand/restore/{brand}', [BrandController::class, 'restore']);
-
+Route::post('/brand/trash', [BrandController::class, 'getTrashed']);
 
 Route::post('/category', [CategoryController::class, 'store']);
 Route::get('/category', [CategoryController::class, 'index']);

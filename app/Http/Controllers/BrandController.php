@@ -15,7 +15,7 @@ class BrandController extends Controller
     public function store(Request $request)
     {
         $brand = Brand::create($request->all());
-        return response()->json($brand);
+        return $this->returnVO("Criada", $brand);
     }
 
 
@@ -27,14 +27,14 @@ class BrandController extends Controller
     public function update(Request $request, Brand $brand)
     {
         $brand->update($request->all());
-        return response()->json($brand);
+        return $this->returnVO("Atualizada", $brand);
     }
 
 
     public function destroy(Brand $brand)
     {
         $brand->delete();
-        return response()->json($brand);
+        return $this->returnVO("Apagada", $brand);
     }
 
 
@@ -42,6 +42,17 @@ class BrandController extends Controller
     {
         $brand = Brand::onlyTrashed()->where('id', $id)->firstOrFail();
         $brand->restore();
-        return response()->json($brand);
+
+        return $this->returnVO("Restaurada", $brand);
+    }
+
+    public function getTrashed()
+    {
+        return response()->json(Brand::onlyTrashed()->get());
+    }
+
+    private function returnVO($message, $content)
+    {
+        return response()->json(["message" => $message, "resp" => $content]);
     }
 }
