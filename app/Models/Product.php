@@ -17,6 +17,7 @@ class Product extends Model
         'old_price',
         'promotion',
         'img',
+        'img_id',
         'brand_id',
         'description',
     ];

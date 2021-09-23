@@ -13,15 +13,9 @@ class ProductController extends Controller
         return response()->json(Product::all());
     }
 
-
     public function store(Request $request)
     {
-
-        if ($request->img) {
-            $image = $request->file('img')->store('product');
-            $image = "storage/" . $image;
-        } else
-            $image = 'storage/product/imagem.jpg';
+        $request['old_price'] = $request->price;
 
         $product = Product::create($request->all());
 
@@ -35,18 +29,9 @@ class ProductController extends Controller
 
     public function update(Request $request, Product $product)
     {
-        if ($request->img) {
-
-            $image = $request->file('img')->store('product');
-            $image = "storage/" . $image;
-
-            if ($product->img != "storage/product/imagem.jpg") {
-                Storage::delete(str_replace('storage/', '', $product->img)); // ver essa parte aqui depois com o prof, nao entedi muito bem
-            }
-        }
+        $request['old_price'] = $product->price;
 
         $product->update($request->all());
-
         return $this->returnVO("Atualizado", $product);
     }
 
