@@ -7,79 +7,35 @@ use Illuminate\Http\Request;
 
 class AdressController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        return response()->json(Adress::where('user_id', Auth()->user()->id)->get());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $request['user_id'] = Auth()->user()->id;
+
+        $address = Adress::create($request->all());
+        return $this->returnVO("Criado", $address);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Adress  $adress
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Adress $adress)
+    public function show(Adress $address)
     {
-        //
+        return response()->json($address);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Adress  $adress
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Adress $adress)
+    public function update(Request $request, Adress $address)
     {
-        //
+        $request['user_id'] = Auth()->user()->id;
+
+        $address->update($request->all());
+
+        return $this->returnVO("Atualizado", $address);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Adress  $adress
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Adress $adress)
+    private function returnVO($message, $content)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Adress  $adress
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Adress $adress)
-    {
-        //
+        return response()->json(["message" => $message, "resp" => $content]);
     }
 }

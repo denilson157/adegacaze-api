@@ -6,6 +6,7 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdressController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,11 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/product/restore/{product}', [ProductController::class, 'restore']);
     Route::post('/product/trash', [ProductController::class, 'getTrashed']);
 
+    Route::get('/address', [AdressController::class, 'index']);
+    Route::get('/address/{address}', [AdressController::class, 'show']);
+    Route::post('/address', [AdressController::class, 'store']);
+    Route::put('/address/{address}', [AdressController::class, 'update']);
+
     Route::post('/logout', [UserController::class, 'logout']);
 });
 
@@ -53,4 +59,3 @@ Route::get('/product', [ProductController::class, 'index']);
 Route::get('/product/{product}', [ProductController::class, 'show']);
 
 Route::post('/login', [UserController::class, 'login']);
-
