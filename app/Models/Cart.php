@@ -19,4 +19,24 @@ class Cart extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    public static function count()
+    {
+        $cart = Cart::where('user_id', '=', Auth()->user()->id)->get();
+        $total = 0;
+        foreach ($cart as $item) {
+            $total += $item->quantity;
+        }
+        return $total;
+    }
+
+    public static function totalValue()
+    {
+        $cart = Cart::where('user_id', '=', Auth()->user()->id)->get();
+        $total = 0;
+        foreach ($cart as $item) {
+            $total += $item->product()->price * $item->quantity;
+        }
+        return $total;
+    }
 }

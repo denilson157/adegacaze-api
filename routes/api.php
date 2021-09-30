@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdressController;
+use App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +46,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/address/{address}', [AdressController::class, 'show']);
     Route::post('/address', [AdressController::class, 'store']);
     Route::put('/address/{address}', [AdressController::class, 'update']);
+
+    Route::post('/cart/add', [CartController::class, 'add']);
+    Route::post('/cart/remove', [CartController::class, 'remove']);
+    Route::get('/cart', [CartController::class, 'index']);
 
     Route::post('/logout', [UserController::class, 'logout']);
 });
