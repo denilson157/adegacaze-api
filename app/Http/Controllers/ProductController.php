@@ -37,7 +37,13 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
+
+        if ($product->Orders()->count() > 0) {
+            return $this->returnVO("Não é possível apagar um produto que tenha um pedido.", null);
+        }
+
         $product->delete();
+
         return $this->returnVO("Apagado", $product);
     }
 

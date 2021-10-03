@@ -8,6 +8,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdressController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +51,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/cart/add', [CartController::class, 'add']);
     Route::post('/cart/remove', [CartController::class, 'remove']);
     Route::get('/cart', [CartController::class, 'index']);
+
+    Route::post('/order', [OrderController::class, 'store']);
+    Route::get('/order', [OrderController::class, 'index']);
+    Route::get('/order/{order}', [OrderController::class, 'show']);
 
     Route::post('/logout', [UserController::class, 'logout']);
 });
