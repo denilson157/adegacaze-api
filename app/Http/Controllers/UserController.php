@@ -11,11 +11,12 @@ class UserController extends Controller
     public function login(Request $request)
     {
         $request->validate([
+            'name' => 'required|string|max:255',
             'email' => 'required|email',
             'password' => 'required',
             'device_name' => 'required',
         ]);
-        
+
         $user = User::where('email', $request->email)->first();
 
         if (!$user || !Hash::check($request->password, $user->password))
@@ -50,9 +51,14 @@ class UserController extends Controller
                 'email' => 'required|email|unique:users',
                 'name' => 'required|max:255',
                 'password' => 'required|min:8',
+                'birthday' => 'nullable|date',
+                'cellphone' => 'required|integer',
                 'device_name' => 'required'
             ]
         );
+
+        $request['isAdmin'] = false;
+
 
         $user = User::create($request->all());
 
