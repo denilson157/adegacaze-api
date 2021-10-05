@@ -12,8 +12,11 @@ class UsersTableSeeder extends Seeder
     {
         DB::table('users')->insert([
             'name' => 'Denílson Pereira',
-            'email' => 'deene67@gmail.com',
-            'password' => Hash::make('A3154868e@')
+            'email' => 'admin@gmail.com',
+            'password' => Hash::make('A3154868e@'),
+            'birthday' => '1998-12-27',
+            'cellphone' => 960440279,
+            'isAdmin' => true
         ]);
     }
 }

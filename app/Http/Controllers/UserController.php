@@ -11,7 +11,6 @@ class UserController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
             'email' => 'required|email',
             'password' => 'required',
             'device_name' => 'required',
