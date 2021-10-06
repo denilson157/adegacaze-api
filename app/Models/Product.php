@@ -19,13 +19,14 @@ class Product extends Model
         'promotion',
         'img_id',
         'brand_id',
-        'description'
+        'description',
+        'category_id',
     ];
 
 
-    public function Categories()
+    public function category()
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsTo(Category::class);
     }
 
     public function Orders()

@@ -67,6 +67,7 @@ Route::get('/category/{category}', [CategoryController::class, 'show']);
 
 Route::get('/product', [ProductController::class, 'index']);
 Route::get('/product/{product}', [ProductController::class, 'show']);
+Route::get('/product/category/{category}', [ProductController::class, 'getByCategory']);
 
 Route::post('/login', [UserController::class, 'login']);
 

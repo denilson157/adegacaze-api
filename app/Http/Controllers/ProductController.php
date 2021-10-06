@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -58,6 +59,14 @@ class ProductController extends Controller
     public function getTrashed()
     {
         return response()->json(Product::onlyTrashed()->get());
+    }
+
+
+    public function getByCategory(Category $category)
+    {
+        $products = Product::where('category_id', $category->id)->get();
+
+        return response()->json($products);
     }
 
     private function returnVO($message, $content)
