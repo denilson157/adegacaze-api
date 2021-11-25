@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Product;
 use App\Models\OrderProduct;
+use Illuminate\Support\Facades\DB;
 
 class Order extends Model
 {
@@ -15,12 +16,14 @@ class Order extends Model
         'adress_id',
         'user_id',
         'observation',
-        'payment_type'
+        'payment_type',
+        'status_id',
+        'date_finish'
     ];
 
     public function Products()
     {
-        return $this->belongsToMany(Product::class)->withPivot('price')->withTimestamps();
+        return $this->belongsToMany(Product::class)->withPivot('price')->withPivot('quantity')->withTimestamps();
         // return $this->belongsToMany(Product::class, 'order_product')->orWhere('order_product.order_id', $this->id);
     }
 
@@ -33,5 +36,10 @@ class Order extends Model
     public function adress()
     {
         return $this->belongsTo(Adress::class);
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(OrderStatus::class);
     }
 }

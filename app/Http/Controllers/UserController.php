@@ -21,11 +21,13 @@ class UserController extends Controller
         if (!$user || !Hash::check($request->password, $user->password))
             return $this->returnVO("Credenciais inválidas", null);
 
+        $user['isAdmin'] = $user['isAdmin'] === 1 ? true : false;
 
         $userCredentials = ([
             'user' => $user,
             'token' => $user->createToken($request->device_name)->plainTextToken
         ]);
+
 
 
         return $this->returnVO("Login realizado", $userCredentials);
@@ -58,6 +60,13 @@ class UserController extends Controller
 
         $request['isAdmin'] = false;
 
+        $request['password'] = Hash::make($request['password']);
+
+
+        $existentUser = User::where('email', $request['email'])->get();
+        if (count($existentUser) > 0) {
+            return $this->returnVO("Email informado já esta em uso.", null);
+        }
 
         $user = User::create($request->all());
 
@@ -67,6 +76,22 @@ class UserController extends Controller
         ]);
 
         return $this->returnVO("Usuário Criado", $userCredentials);
+    }
+
+    public function show(User $user)
+    {
+        $user['isAdmin'] = $user['isAdmin'] === 1 ? true : false;
+
+        return response()->json($user);
+    }
+
+    public function update(Request $request, User $user)
+    {
+        $user->update($request->all());
+
+        $request['isAdmin'] = false;
+
+        return $this->returnVO("Atualizado", $user);
     }
 
     private function returnVO($message, $content)

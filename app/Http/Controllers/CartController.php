@@ -69,6 +69,18 @@ class CartController extends Controller
         return $this->returnVO("Removido do carrinho", null);
     }
 
+    public function removeProduct(Request $request)
+    {
+        $request->validate([
+            'product_id' => 'required'
+        ]);
+
+        $item = Cart::where([['product_id', '=', $request->product_id], ['user_id', '=', Auth()->user()->id]])->first();
+
+        $item->delete();
+        return $this->returnVO("Removido do carrinho", null);
+    }
+
     private function returnVO($message, $content)
     {
         return response()->json(["message" => $message, "resp" => $content]);

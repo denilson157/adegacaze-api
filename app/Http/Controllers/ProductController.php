@@ -64,7 +64,25 @@ class ProductController extends Controller
 
     public function getByCategory(Category $category)
     {
-        $products = Product::where('category_id', $category->id)->get();
+        $products = Product::where('category_id', $category->id)
+            ->inRandomOrder()
+            ->limit(8)
+            ->get();
+
+        return response()->json($products);
+    }
+
+
+
+    public function searchByCategory(Request $request)
+    {
+        $categoryId = $request['category_id'];
+        $productName = $request['product_name'];
+
+        $products = Product::where('name', $productName)
+            ->orWhere('name', 'like', '%' . $productName . '%')
+            ->where('category_id', $categoryId)
+            ->get();
 
         return response()->json($products);
     }

@@ -47,16 +47,23 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/address/{address}', [AdressController::class, 'show']);
     Route::post('/address', [AdressController::class, 'store']);
     Route::put('/address/{address}', [AdressController::class, 'update']);
+    Route::post('/address/pattern', [AdressController::class, 'getPatternAddress']);
 
     Route::post('/cart/add', [CartController::class, 'add']);
     Route::post('/cart/remove', [CartController::class, 'remove']);
+    Route::post('/cart/remove/product', [CartController::class, 'removeProduct']);
     Route::get('/cart', [CartController::class, 'index']);
 
     Route::post('/order', [OrderController::class, 'store']);
     Route::get('/order', [OrderController::class, 'index']);
+    Route::get('/order/list', [OrderController::class, 'listAll']);
+    Route::put('/order/{order}', [OrderController::class, 'update']);
     Route::get('/order/{order}', [OrderController::class, 'show']);
 
     Route::post('/logout', [UserController::class, 'logout']);
+
+    Route::get('/user/{user}', [UserController::class, 'show']);
+    Route::put('/user/{user}', [UserController::class, 'update']);
 });
 
 Route::get('/brand', [BrandController::class, 'index']);
@@ -68,6 +75,7 @@ Route::get('/category/{category}', [CategoryController::class, 'show']);
 Route::get('/product', [ProductController::class, 'index']);
 Route::get('/product/{product}', [ProductController::class, 'show']);
 Route::get('/product/category/{category}', [ProductController::class, 'getByCategory']);
+Route::post('/product/search/category', [ProductController::class, 'searchByCategory']);
 
 Route::post('/login', [UserController::class, 'login']);
 
