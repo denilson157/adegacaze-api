@@ -64,6 +64,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::get('/user/{user}', [UserController::class, 'show']);
     Route::put('/user/{user}', [UserController::class, 'update']);
+    Route::get('/user', [UserController::class, 'index']);
 });
 
 Route::get('/brand', [BrandController::class, 'index']);

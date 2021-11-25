@@ -85,6 +85,19 @@ class UserController extends Controller
         return response()->json($user);
     }
 
+    public function index()
+    {
+        $user = User::where('id', '=', Auth()->user()->id)->get()->firstOrFail();
+
+        if (!$user || ($user && $user['isAdmin'] == false))
+            return response()->json([]);
+
+
+        $users = User::where('isAdmin', false, Auth()->user()->id)->get();
+
+        return response()->json($users);
+    }
+
     public function update(Request $request, User $user)
     {
         $user->update($request->all());
