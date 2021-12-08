@@ -50,21 +50,21 @@ class OrderController extends Controller
         if (!$user || ($user && $user['isAdmin'] == false))
             return $this->index();
 
-        $products = Order::with(['adress', 'Products'])->orderBy('id', 'DESC')->get();
+        $products = Order::with(['adress', 'Products', 'status', 'user'])->orderBy('id', 'DESC')->get();
 
         return response()->json($products);
     }
 
     public function index()
     {
-        $products = Order::with(['adress', 'Products', 'status'])->where('user_id', '=', Auth()->user()->id)->orderBy('id', 'DESC')->get();
+        $products = Order::with(['adress', 'Products', 'status', 'user'])->where('user_id', '=', Auth()->user()->id)->orderBy('id', 'DESC')->get();
 
         return response()->json($products);
     }
 
     public function show(Order $order)
     {
-        $order = Order::with('Products')->with(['adress', 'status'])->where('id', '=', $order->id)->get()->firstOrFail();
+        $order = Order::with('Products')->with(['adress', 'status', 'status', 'user'])->where('id', '=', $order->id)->get()->firstOrFail();
 
         return response()->json($order);
     }

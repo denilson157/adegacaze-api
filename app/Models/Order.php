@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Product;
+use App\Models\User;
 use App\Models\OrderProduct;
 use Illuminate\Support\Facades\DB;
 
@@ -41,5 +42,11 @@ class Order extends Model
     public function status()
     {
         return $this->belongsTo(OrderStatus::class);
+    }
+
+    
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

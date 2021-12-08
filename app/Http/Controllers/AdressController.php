@@ -36,14 +36,16 @@ class AdressController extends Controller
         $request['user_id'] = $this->getUserId();
 
         if ($request['pattern']) {
-            $allAddress = Adress::where('pattern', 1)->get();
+            $allAddress = Adress::where('user_id', $this->getUserId())->where('pattern', 1)->where('id', '<>', $request['id'])->get();
             foreach ($allAddress as $add) {
                 $add['pattern'] = 0;
                 $add->update();
             }
-        }
 
-        $address->update($request->all());
+            $address->update($request->all());
+        } else {
+            $address->update($request->all());
+        }
 
         return $this->returnVO("Atualizado", $address);
     }
